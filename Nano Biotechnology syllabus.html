@@ -1,0 +1,2063 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nanobiotechnology — Course 1</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+:root {
+    --bg: #08080d;
+    --bg2: #0d0d15;
+    --card: rgba(20,20,31,.82);
+    --card2: #171722;
+    --text: #f7f7fb;
+    --muted: #a4a5b2;
+    --line: rgba(255,255,255,.09);
+
+    --purple: #9b5cff;
+    --pink: #ff4fcf;
+    --cyan: #00e5ff;
+    --green: #c8ff42;
+    --orange: #ff9d42;
+
+    --shadow: rgba(0,0,0,.35);
+}
+
+body.light {
+    --bg: #f5f6fa;
+    --bg2: #ffffff;
+    --card: rgba(255,255,255,.9);
+    --card2: #eef0f6;
+    --text: #11121a;
+    --muted: #666a78;
+    --line: rgba(0,0,0,.1);
+
+    --purple: #7c3aed;
+    --pink: #db2777;
+    --cyan: #0891b2;
+    --green: #65a30d;
+    --orange: #ea580c;
+
+    --shadow: rgba(0,0,0,.12);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Space Grotesk", sans-serif;
+    transition: .4s ease;
+    overflow-x: hidden;
+}
+
+/* ---------- BACKGROUND ---------- */
+
+.bg {
+    position: fixed;
+    inset: 0;
+    z-index: -10;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.grid-bg {
+    position: absolute;
+    inset: 0;
+    opacity: .18;
+    background-image:
+        linear-gradient(var(--line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 45px 45px;
+    mask-image: linear-gradient(to bottom, black, transparent);
+}
+
+.blob {
+    position: absolute;
+    width: 420px;
+    height: 420px;
+    border-radius: 50%;
+    filter: blur(110px);
+    opacity: .2;
+    animation: float 12s ease-in-out infinite alternate;
+}
+
+.blob1 {
+    background: var(--purple);
+    left: -180px;
+    top: -150px;
+}
+
+.blob2 {
+    background: var(--pink);
+    right: -180px;
+    top: 25%;
+    animation-delay: -4s;
+}
+
+.blob3 {
+    background: var(--cyan);
+    left: 35%;
+    bottom: -250px;
+    animation-delay: -7s;
+}
+
+@keyframes float {
+    from {
+        transform: translate(0,0) scale(1);
+    }
+    to {
+        transform: translate(100px,80px) scale(1.25);
+    }
+}
+
+/* ---------- NAV ---------- */
+
+nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 17px 6%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    background: color-mix(in srgb, var(--bg) 78%, transparent);
+    backdrop-filter: blur(20px);
+
+    border-bottom: 1px solid var(--line);
+}
+
+.logo {
+    font-family: "DM Mono", monospace;
+    font-size: 13px;
+    letter-spacing: 2px;
+    color: var(--green);
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.credit-badge {
+    padding: 8px 14px;
+    border: 1px solid var(--line);
+    border-radius: 50px;
+    color: var(--muted);
+    font-family: "DM Mono", monospace;
+    font-size: 11px;
+}
+
+.theme-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    background: var(--card);
+    color: var(--text);
+    cursor: pointer;
+    font-size: 18px;
+    transition: .3s;
+}
+
+.theme-btn:hover {
+    transform: rotate(20deg) scale(1.08);
+}
+
+/* ---------- HERO ---------- */
+
+.hero {
+    min-height: 78vh;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    padding: 80px 7%;
+}
+
+.hero-content {
+    max-width: 1100px;
+}
+
+.nano-icon {
+    font-size: clamp(4rem, 10vw, 7rem);
+    display: inline-block;
+    animation: nanoFloat 3s ease-in-out infinite;
+    filter:
+        drop-shadow(0 0 15px var(--purple))
+        drop-shadow(0 0 35px var(--cyan));
+}
+
+@keyframes nanoFloat {
+    0%,100% {
+        transform: translateY(0) rotate(-3deg);
+    }
+    50% {
+        transform: translateY(-15px) rotate(3deg);
+    }
+}
+
+.course-label {
+    display: inline-block;
+    margin-top: 25px;
+    padding: 9px 17px;
+    border: 1px solid var(--line);
+    background: var(--card);
+    border-radius: 50px;
+    color: var(--cyan);
+    font-family: "DM Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+}
+
+.hero h1 {
+    margin-top: 25px;
+    font-size: clamp(3rem, 8vw, 7.5rem);
+    line-height: .9;
+    letter-spacing: -6px;
+
+    background:
+        linear-gradient(
+            110deg,
+            var(--text),
+            var(--purple),
+            var(--pink),
+            var(--cyan),
+            var(--text)
+        );
+
+    background-size: 300%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+
+    animation: gradient 7s linear infinite;
+}
+
+@keyframes gradient {
+    to {
+        background-position: 300%;
+    }
+}
+
+.hero-subtitle {
+    max-width: 760px;
+    margin: 30px auto 0;
+    color: var(--muted);
+    line-height: 1.8;
+    font-size: 16px;
+}
+
+/* ---------- STATS ---------- */
+
+.stats {
+    width: min(1100px, 90%);
+    margin: -20px auto 70px;
+
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 18px;
+}
+
+.stat {
+    padding: 25px;
+    text-align: center;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    backdrop-filter: blur(15px);
+    transition: .3s;
+}
+
+.stat:hover {
+    transform: translateY(-6px);
+    border-color: var(--purple);
+}
+
+.stat-number {
+    font-size: 35px;
+    font-weight: 700;
+    color: var(--green);
+}
+
+.stat-label {
+    margin-top: 7px;
+    color: var(--muted);
+    font-size: 12px;
+    font-family: "DM Mono", monospace;
+}
+
+/* ---------- MAIN ---------- */
+
+.container {
+    width: min(1100px, 90%);
+    margin: auto;
+}
+
+section {
+    padding: 85px 0;
+}
+
+.section-tag {
+    color: var(--green);
+    font-family: "DM Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+}
+
+h2 {
+    font-size: clamp(2.2rem,5vw,4.5rem);
+    letter-spacing: -3px;
+    line-height: 1;
+    margin-bottom: 20px;
+}
+
+.section-desc {
+    color: var(--muted);
+    max-width: 800px;
+    line-height: 1.8;
+    margin-bottom: 40px;
+}
+
+/* ---------- COURSE OUTCOMES ---------- */
+
+.outcomes {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 18px;
+}
+
+.outcome {
+    padding: 27px;
+    border-radius: 23px;
+    background:
+        linear-gradient(
+            145deg,
+            var(--card),
+            var(--card2)
+        );
+    border: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
+    transition: .3s;
+}
+
+.outcome:hover {
+    transform: translateY(-6px);
+    border-color: var(--cyan);
+}
+
+.outcome::after {
+    content: "";
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    right: -40px;
+    bottom: -40px;
+    background: var(--purple);
+    filter: blur(45px);
+    opacity: .2;
+}
+
+.co {
+    color: var(--pink);
+    font-family: "DM Mono", monospace;
+    font-size: 12px;
+    margin-bottom: 13px;
+}
+
+.outcome h3 {
+    font-size: 19px;
+    margin-bottom: 10px;
+}
+
+.outcome p {
+    color: var(--muted);
+    line-height: 1.7;
+    font-size: 14px;
+}
+
+/* ---------- MODULES ---------- */
+
+.module {
+    margin-bottom: 35px;
+    border-radius: 30px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    overflow: hidden;
+    box-shadow: 0 20px 60px var(--shadow);
+}
+
+.module-header {
+    padding: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+
+    cursor: pointer;
+
+    background:
+        linear-gradient(
+            110deg,
+            color-mix(in srgb, var(--purple) 13%, var(--card)),
+            var(--card)
+        );
+}
+
+.module:nth-child(2) .module-header {
+    background:
+        linear-gradient(
+            110deg,
+            color-mix(in srgb, var(--pink) 13%, var(--card)),
+            var(--card)
+        );
+}
+
+.module:nth-child(3) .module-header {
+    background:
+        linear-gradient(
+            110deg,
+            color-mix(in srgb, var(--cyan) 13%, var(--card)),
+            var(--card)
+        );
+}
+
+.module:nth-child(4) .module-header {
+    background:
+        linear-gradient(
+            110deg,
+            color-mix(in srgb, var(--green) 10%, var(--card)),
+            var(--card)
+        );
+}
+
+.module-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.module-number {
+    min-width: 62px;
+    height: 62px;
+    display: grid;
+    place-items: center;
+
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--purple),
+            var(--pink)
+        );
+
+    color: white;
+    font-weight: 700;
+    font-family: "DM Mono", monospace;
+}
+
+.module:nth-child(2) .module-number {
+    background:
+        linear-gradient(
+            135deg,
+            var(--pink),
+            var(--orange)
+        );
+}
+
+.module:nth-child(3) .module-number {
+    background:
+        linear-gradient(
+            135deg,
+            var(--cyan),
+            var(--purple)
+        );
+}
+
+.module:nth-child(4) .module-number {
+    background:
+        linear-gradient(
+            135deg,
+            var(--green),
+            var(--cyan)
+        );
+    color: #111;
+}
+
+.module-title {
+    font-size: 25px;
+    margin-bottom: 7px;
+}
+
+.module-meta {
+    color: var(--muted);
+    font-family: "DM Mono", monospace;
+    font-size: 11px;
+}
+
+.toggle {
+    font-size: 25px;
+    transition: .3s;
+}
+
+.module.open .toggle {
+    transform: rotate(45deg);
+}
+
+.module-body {
+    display: none;
+    padding: 5px 30px 35px;
+}
+
+.module.open .module-body {
+    display: block;
+    animation: openModule .4s ease;
+}
+
+@keyframes openModule {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ---------- TOPIC GROUP ---------- */
+
+.topic-group {
+    margin-top: 22px;
+    padding: 25px;
+
+    border: 1px solid var(--line);
+    border-radius: 22px;
+
+    background: color-mix(
+        in srgb,
+        var(--card2) 75%,
+        transparent
+    );
+}
+
+.topic-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.topic-heading h3 {
+    font-size: 18px;
+}
+
+.lecture {
+    white-space: nowrap;
+    padding: 7px 11px;
+    border-radius: 50px;
+    background: color-mix(
+        in srgb,
+        var(--purple) 15%,
+        transparent
+    );
+    color: var(--purple);
+    font-family: "DM Mono", monospace;
+    font-size: 10px;
+}
+
+.topic-list {
+    display: grid;
+    gap: 9px;
+}
+
+.topic {
+    display: flex;
+    align-items: flex-start;
+    gap: 11px;
+    padding: 12px 14px;
+    border-radius: 13px;
+    background: color-mix(
+        in srgb,
+        var(--bg) 35%,
+        transparent
+    );
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.topic::before {
+    content: "✦";
+    color: var(--green);
+    flex-shrink: 0;
+}
+
+/* ---------- MODULE SUMMARY ---------- */
+
+.module-summary {
+    margin-top: 20px;
+
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 15px;
+}
+
+.summary-box {
+    padding: 18px;
+    border-radius: 17px;
+    border: 1px solid var(--line);
+    background: var(--card2);
+}
+
+.summary-label {
+    color: var(--muted);
+    font-size: 10px;
+    font-family: "DM Mono", monospace;
+    letter-spacing: 1px;
+}
+
+.summary-value {
+    margin-top: 7px;
+    font-size: 23px;
+    color: var(--text);
+}
+
+/* ---------- SYLLABUS OVERVIEW ---------- */
+
+.overview-table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow: hidden;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+    border: 1px solid var(--line);
+    border-radius: 23px;
+    background: var(--card);
+}
+
+.overview-table th,
+.overview-table td {
+    padding: 18px;
+    text-align: left;
+    border-bottom: 1px solid var(--line);
+}
+
+.overview-table th {
+    color: var(--cyan);
+    font-family: "DM Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+}
+
+.overview-table td {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.overview-table tr:last-child td {
+    border-bottom: none;
+}
+
+.module-pill {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 50px;
+    background: color-mix(
+        in srgb,
+        var(--purple) 15%,
+        transparent
+    );
+    color: var(--purple);
+}
+
+/* ---------- SPECIAL TOP-DOWN / BOTTOM-UP ---------- */
+
+.approach-grid {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 20px;
+}
+
+.approach {
+    padding: 32px;
+    border-radius: 27px;
+    border: 1px solid var(--line);
+    background: var(--card);
+    transition: .3s;
+}
+
+.approach:hover {
+    transform: translateY(-7px);
+}
+
+.approach.top {
+    border-top: 4px solid var(--pink);
+}
+
+.approach.bottom {
+    border-top: 4px solid var(--cyan);
+}
+
+.approach-icon {
+    font-size: 35px;
+    margin-bottom: 15px;
+}
+
+.approach h3 {
+    font-size: 25px;
+    margin-bottom: 12px;
+}
+
+.approach p {
+    color: var(--muted);
+    line-height: 1.7;
+    font-size: 14px;
+}
+
+/* ---------- FOOTER ---------- */
+
+footer {
+    padding: 60px 20px;
+    text-align: center;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-family: "DM Mono", monospace;
+    font-size: 11px;
+}
+
+footer strong {
+    color: var(--green);
+}
+
+/* ---------- SCROLL REVEAL ---------- */
+
+.reveal {
+    opacity: 0;
+    transform: translateY(35px);
+    transition:
+        opacity .8s ease,
+        transform .8s ease;
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ---------- RESPONSIVE ---------- */
+
+@media(max-width: 750px) {
+
+    nav {
+        padding: 15px 5%;
+    }
+
+    .credit-badge {
+        display: none;
+    }
+
+    .hero {
+        min-height: 75vh;
+        padding: 60px 5%;
+    }
+
+    .hero h1 {
+        letter-spacing: -3px;
+    }
+
+    .stats {
+        grid-template-columns: 1fr;
+        margin-top: 0;
+    }
+
+    .outcomes,
+    .approach-grid {
+        grid-template-columns: 1fr;
+    }
+
+    section {
+        padding: 65px 0;
+    }
+
+    .module-header {
+        padding: 22px;
+    }
+
+    .module-left {
+        gap: 13px;
+    }
+
+    .module-number {
+        min-width: 48px;
+        height: 48px;
+        border-radius: 14px;
+        font-size: 13px;
+    }
+
+    .module-title {
+        font-size: 18px;
+    }
+
+    .module-body {
+        padding: 0 18px 25px;
+    }
+
+    .topic-group {
+        padding: 19px;
+    }
+
+    .topic-heading {
+        flex-direction: column;
+    }
+
+    .module-summary {
+        grid-template-columns: 1fr;
+    }
+
+    h2 {
+        letter-spacing: -2px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- BACKGROUND -->
+<div class="bg">
+    <div class="grid-bg"></div>
+    <div class="blob blob1"></div>
+    <div class="blob blob2"></div>
+    <div class="blob blob3"></div>
+</div>
+
+<!-- NAVBAR -->
+<nav>
+    <div class="logo">NANO//SYLLABUS</div>
+
+    <div class="nav-actions">
+        <div class="credit-badge">COURSE 01 · 4 CREDITS</div>
+
+        <button
+            class="theme-btn"
+            id="themeBtn"
+            aria-label="Toggle dark and light mode">
+            🌙
+        </button>
+    </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+    <div class="hero-content">
+
+        <div class="nano-icon"></div>
+
+        <div class="course-label">
+            COURSE 01 · NANOBIOTECHNOLOGY
+        </div>
+
+        <h1>
+            BIOTECHNOLOGY<br>
+            SYLLABUS
+        </h1>
+
+        <p class="hero-subtitle">
+            Semester -
+            <strong>III</strong>
+        </p>
+
+    </div>
+</header>
+
+<!-- STATS -->
+<div class="stats reveal">
+
+    <div class="stat">
+        <div class="stat-number">04</div>
+        <div class="stat-label">MODULES</div>
+    </div>
+
+    <div class="stat">
+        <div class="stat-number">60</div>
+        <div class="stat-label">TOTAL CREDITS × MODULE STRUCTURE</div>
+    </div>
+
+    <div class="stat">
+        <div class="stat-number">15</div>
+        <div class="stat-label">LECTURES / MODULE</div>
+    </div>
+
+</div>
+
+<main class="container">
+
+<!-- COURSE OUTCOMES -->
+<section class="reveal">
+
+    <div class="section-tag">00 / COURSE OUTCOMES</div>
+
+    <h2>
+        Learning<br>Outcomes
+    </h2>
+
+    <div class="outcomes">
+
+        <div class="outcome">
+            <div class="co">CO1</div>
+            <h3>National + Global Perspective</h3>
+            <p>
+                Acquainted with the perspective of
+                Nanotechnology at national and
+                international levels.
+            </p>
+        </div>
+
+        <div class="outcome">
+            <div class="co">CO2</div>
+            <h3>Nanoparticle Synthesis</h3>
+            <p>
+                Well versed with approaches used
+                for nanoparticle synthesis.
+            </p>
+        </div>
+
+        <div class="outcome">
+            <div class="co">CO3</div>
+            <h3>Nanoparticles in Nature</h3>
+            <p>
+                Able to introduce examples of
+                nanoparticles present in nature.
+            </p>
+        </div>
+
+        <div class="outcome">
+            <div class="co">CO4</div>
+            <h3>Characterization</h3>
+            <p>
+                Able to understand the role of
+                various characterization techniques
+                used in nanotechnology.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- SYLLABUS OVERVIEW -->
+<section class="reveal">
+
+    <div class="section-tag">01 / SYLLABUS MAP</div>
+
+    <h2>
+        Course<br>Structure
+    </h2>
+
+    <div class="table-wrapper">
+
+        <table class="overview-table">
+
+            <thead>
+                <tr>
+                    <th>MODULE</th>
+                    <th>TITLE</th>
+                    <th>CREDITS</th>
+                    <th>LECTURES</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>
+                        <span class="module-pill">MODULE I</span>
+                    </td>
+                    <td>Introduction to Nanotechnology</td>
+                    <td>4</td>
+                    <td>15</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <span class="module-pill">MODULE II</span>
+                    </td>
+                    <td>Synthesis of Nanomaterials</td>
+                    <td>4</td>
+                    <td>15</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <span class="module-pill">MODULE III</span>
+                    </td>
+                    <td>Nanotechnology in Nature</td>
+                    <td>4</td>
+                    <td>15</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <span class="module-pill">MODULE IV</span>
+                    </td>
+                    <td>Properties & Characterization of Nanoparticles</td>
+                    <td>4</td>
+                    <td>15</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+
+<!-- MODULES -->
+<section>
+
+    <div class="section-tag reveal">02 / COMPLETE SYLLABUS</div>
+
+    <h2 class="reveal">
+        Module<br>Breakdown
+    </h2>
+
+
+    <!-- MODULE I -->
+    <div class="module open reveal">
+
+        <div class="module-header">
+
+            <div class="module-left">
+
+                <div class="module-number">01</div>
+
+                <div>
+                    <div class="module-title">
+                        Introduction to Nanotechnology
+                    </div>
+
+                    <div class="module-meta">
+                        4 CREDITS · 15 LECTURES
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="toggle">+</div>
+
+        </div>
+
+
+        <div class="module-body">
+
+            <div class="topic-group">
+
+                <div class="topic-heading">
+                    <h3>
+                        Introduction to Nanotechnology
+                    </h3>
+
+                    <span class="lecture">
+                        1 LECTURE
+                    </span>
+                </div>
+
+                <div class="topic-list">
+
+                    <div class="topic">
+                        Introduction to Nanotechnology
+                    </div>
+
+                    <div class="topic">
+                        Nano-Geosystem for Abiotic Nanoparticles Formation
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="topic-group">
+
+                <div class="topic-heading">
+                    <h3>
+                        Nanoscience & Applications
+                    </h3>
+
+                    <span class="lecture">
+                        3 LECTURES
+                    </span>
+                </div>
+
+                <div class="topic-list">
+
+                    <div class="topic">
+                        Nanoscience and their applications
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="topic-group">
+
+                <div class="topic-heading">
+                    <h3>
+                        Nano-Biosystem
+                    </h3>
+
+                    <span class="lecture">
+                        3 LECTURES
+                    </span>
+                </div>
+
+                <div class="topic-list">
+
+                    <div class="topic">
+                        Nano-Biosystem Consisting of Biotic Nanoparticles
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="topic-group">
+
+                <div class="topic-heading">
+                    <h3>
+                        Nanotechnology in Ayurveda
+                    </h3>
+
+                    <span class="lecture">
+                        3 LECTURES
+                    </span>
+                </div>
+
+                <div class="topic-list">
+
+                    <div class="topic">
+                        Examples of Nanotechnology in Ayurveda
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="topic-group">
+
+                <div class="topic-heading">
+                    <h3>
+                        Research, Development & Regulation
+                    </h3>
+
+                    <span class="lecture">
+                        3 LECTURES
+                    </span>
+                </div>
+
+                <div class="topic-list">
+
+                    <div class="topic">
+                        Nanotechnology research development and innovation in India
+                    </div>
+
+                    <div class="topic">
+                        Nanotechnology and Regulation
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="topic-group">
+
+                <div class="topic-heading">
+                    <h3>
+                        Global & Indian Perspective
+                    </h3>
+
+                    <span class="lecture">
+                        2 LECTURES
+                    </span>
+                </div>
+
+                <div class="topic-list">
+
+                    <div class="topic">
+                        Global and Indian Perspective
+                    </div>
+
+                    <div class="topic">
+                        Global trends in Nanotechnology
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="module-summary">
+
+                <div class="summary-box">
+                    <div class="summary-label">CREDITS</div>
+                    <div class="summary-value">4</div>
+                </div>
+
+                <div class="summary-box">
+                    <div class="summary-label">LECTURES</div>
+                    <div class="summary-value">15</div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- MODULE II -->
+    <div class="module reveal">
+
+        <div class="module-header">
+
+            <div class="module-left">
+
+                <div class="module-number">02</div>
+
+                <div>
+                    <div class="module-title">
+                        Synthesis of Nanomaterials
+                    </div>
+
+                    <div class="module-meta">
+                        4 CREDITS · 15 LECTURES
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="toggle">+</div>
+
+        </div>
+
+
+        <div class="module-body">
+
+
+            <div class="topic-group">
+
+                <div class="topic-heading">
+
+                    <h3>
+                        Nanometre-Scale Materials
+                    </h3>
+
+                    <span class="lecture">
+                        4 LECTURES
+                    </span>
+
+                </div>
+
+                <div class="topic-list">
+
+                    <div class="topic">
+                        Nanometre-Scale Metals
+                    </div>
+
+                    <div class="topic">
+                        Metal Oxides
+                    </div>
+
+                    <div class="topic">
+                        Nano polymers
+                    </div>
+
+                    <div class="topic">
+                        Quantum Dots
+                    </div>
+
+                    <div class="topic">
+                        Nanocarbons / Carbon nanostructures
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="topic-group">
+
+                <div class="topic-heading">
+
+                    <h3>
+                        Synthesis of Nanometre-Scale Materials
+                    </h3>
+
+                    <span class="lecture">
+                        4 LECTURES
+                    </span>
+
+                </div>
+
+                <div class="topic-list">
+
+                    <div class="topic">
+                        Top-down and bottom-up approach
+                    </div>
+
+                    <div class="topic">
+                        Physical methods of synthesis
+                    </div>
+
+                    <div class="topic">
+                        Mechanical methods
+                    </div>
+
+                    <div class="topic">
+                        Ball milling
+                    </div>
+
+                    <div class="topic">
+                        Melt Mixing
+                    </div>
+
+                    <div class="topic">
+                        Physical method deposition
+                    </div>
+
+                    <div class="topic">
+                        Laser Vaporization (Ablation) method
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="topic-group">
+
+                <div class="topic-heading">
+
+                    <h3>
+                        Chemical Methods of Synthesis
+                    </h3>
+
+                    <span class="lecture">
+                        4 LECTURES
+                    </span>
+
+                </div>
+
+                <div class="topic-list">
+
+                    <div class="topic">
+                        Introduction and advantages
+                    </div>
+
+                    <div class="topic">
+                        Introduction to Colloids
+                    </div>
+
+                    <div class="topic">
+                        Synthesis of Colloids
+                    </div>
+
+                    <div class="topic">
+                        Sol-gel method
+                    </div>
+
+                    <div class="topic">
+                        Hydrothermal synthesis
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="topic-group">
+
+                <div class="topic-heading">
+
+                    <h3>
+                        Biological Methods of Synthesis
+                    </h3>
+
+                    <span class="lecture">
+                        3 LECTURES
+                    </span>
+
+                </div>
+
+                <div class="topic-list">
+
+                    <div class="topic">
+                        Synthesis using microorganisms
+                    </div>
+
+                    <div class="topic">
+                        Synthesis using plants
+                    </div>
+
+                    <div class="topic">
+                        Synthesis using DNA
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="module-summary">
+
+                <div class="summary-box">
+                    <div class="summary-label">LECTURES</div>
+                    <div class="summary-value">15</div>
+                </div>
+
+                <div class="summary-box">
+                    <div class="summary-label">CORE FOCUS</div>
+                    <div class="summary-value">Synthesis</div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- MODULE III -->
+    <div class="module reveal">
+
+        <div class="module-header">
+
+            <div class="module-left">
+
+                <div class="module-number">03</div>
+
+                <div>
+                    <div class="module-title">
+                        Nanotechnology in Nature
+                    </div>
+
+                    <div class="module-meta">
+                        4 CREDITS · 15 LECTURES
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="toggle">+</div>
+
+        </div>
+
+
+        <div class="module-body">
+
+
+            <div class="topic-group">
+
+                <div class="topic-heading">
+
+                    <h3>
+                        Self-Assembly of Nanoparticles
+                    </h3>
+
+                    <span class="lecture">
+                        5 LECTURES
+                    </span>
+
+                </div>
+
+                <div class="topic-list">
+
+                    <div class="topic">
+                        Mechanism of Self Assembly
+                    </div>
+
+                    <div class="topic">
+                        Examples of Self Assembly
+                    </div>
+
+                    <div class="topic">
+                        Self-Assembly of Nanoparticles Using Organic Molecules
+                    </div>
+
+                    <div class="topic">
+                        Self-Assembly in Biological Systems
+                    </div>
+
+                    <div class="topic">
+                        Self-Assembly in Inorganic Materials
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="topic-group">
+
+                <div class="topic-heading">
+
+                    <h3>
+                        Examples of Nanostructures in Nature
+                    </h3>
+
+                    <span class="lecture">
+                        5 LECTURES
+                    </span>
+
+                </div>
+
+                <div class="topic-list">
+
+                    <div class="topic">
+                        Superhydrophobic surfaces of plants
+                    </div>
+
+                    <div class="topic">
+                        Biomineralization of silica by diatoms
+                    </div>
+
+                    <div class="topic">
+                        Silicification by sponges
+                    </div>
+
+                    <div class="topic">
+                        Magnetic particles in animals and microorganisms
+                    </div>
+
+                    <div class="topic">
+                        Serpent Sea star
+                    </div>
+
+                    <div class="topic">
+                        Beak of squid
+                    </div>
+
+                    <div class="topic">
+                        Beard of Mussels
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="topic-group">
+
+                <div class="topic-heading">
+
+                    <h3>
+                        Biological Nanostructures & Nanorobotics
+                    </h3>
+
+                    <span class="lecture">
+                        5 LECTURES
+                    </span>
+
+                </div>
+
+                <div class="topic-list">
+
+                    <div class="topic">
+                        ATP synthase
+                    </div>
+
+                    <div class="topic">
+                        The kinesin
+                    </div>
+
+                    <div class="topic">
+                        Myosin
+                    </div>
+
+                    <div class="topic">
+                        Dynein
+                    </div>
+
+                    <div class="topic">
+                        Flagella modulated motion
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="module-summary">
+
+                <div class="summary-box">
+                    <div class="summary-label">LECTURES</div>
+                    <div class="summary-value">15</div>
+                </div>
+
+                <div class="summary-box">
+                    <div class="summary-label">CORE FOCUS</div>
+                    <div class="summary-value">Nature</div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- MODULE IV -->
+    <div class="module reveal">
+
+        <div class="module-header">
+
+            <div class="module-left">
+
+                <div class="module-number">04</div>
+
+                <div>
+                    <div class="module-title">
+                        Properties & Characterization
+                    </div>
+
+                    <div class="module-meta">
+                        4 CREDITS · 15 LECTURES
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="toggle">+</div>
+
+        </div>
+
+
+        <div class="module-body">
+
+
+            <div class="topic-group">
+
+                <div class="topic-heading">
+
+                    <h3>
+                        Characterization of Nanoparticles
+                    </h3>
+
+                    <span class="lecture">
+                        3 LECTURES
+                    </span>
+
+                </div>
+
+                <div class="topic-list">
+
+                    <div class="topic">
+                        Microscopy
+                    </div>
+
+                    <div class="topic">
+                        SEM
+                    </div>
+
+                    <div class="topic">
+                        TEM
+                    </div>
+
+                    <div class="topic">
+                        Scanning Tunnelling Microscopy
+                    </div>
+
+                    <div class="topic">
+                        Atomic Force Microscopy
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="topic-group">
+
+                <div class="topic-heading">
+
+                    <h3>
+                        Spectroscopy & Analytical Techniques
+                    </h3>
+
+                    <span class="lecture">
+                        5 LECTURES
+                    </span>
+
+                </div>
+
+                <div class="topic-list">
+
+                    <div class="topic">
+                        UV-Vis Spectroscopy
+                    </div>
+
+                    <div class="topic">
+                        Dynamic Light Scattering
+                    </div>
+
+                    <div class="topic">
+                        X-Ray Diffraction
+                    </div>
+
+                    <div class="topic">
+                        FTIR
+                    </div>
+
+                    <div class="topic">
+                        X Ray Photoelectron Spectroscopy
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="topic-group">
+
+                <div class="topic-heading">
+
+                    <h3>
+                        Plasmonics & Nano Magnetism
+                    </h3>
+
+                    <span class="lecture">
+                        3 LECTURES
+                    </span>
+
+                </div>
+
+                <div class="topic-list">
+
+                    <div class="topic">
+                        Plasmonic material
+                    </div>
+
+                    <div class="topic">
+                        Localised Surface Plasmon Resonance
+                    </div>
+
+                    <div class="topic">
+                        Nano magnetism
+                    </div>
+
+                    <div class="topic">
+                        Types of magnetic materials
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="topic-group">
+
+                <div class="topic-heading">
+
+                    <h3>
+                        Nanotoxicology
+                    </h3>
+
+                    <span class="lecture">
+                        4 LECTURES
+                    </span>
+
+                </div>
+
+                <div class="topic-list">
+
+                    <div class="topic">
+                        Toxicity of Nanomaterials
+                    </div>
+
+                    <div class="topic">
+                        Factors Responsible for the Nanomaterial Toxicity
+                    </div>
+
+                    <div class="topic">
+                        Routes of Exposure to Engineered Nanoparticles
+                    </div>
+
+                    <div class="topic">
+                        Mechanisms of Nanoparticle Toxicity
+                    </div>
+
+                    <div class="topic">
+                        Toxicology of Nanocarriers
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="module-summary">
+
+                <div class="summary-box">
+                    <div class="summary-label">LECTURES</div>
+                    <div class="summary-value">15</div>
+                </div>
+
+                <div class="summary-box">
+                    <div class="summary-label">CORE FOCUS</div>
+                    <div class="summary-value">Analysis</div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FINAL STRUCTURE -->
+<section class="reveal">
+
+    <div class="section-tag">03 / FINAL CHECK</div>
+
+    <h2>
+        Course<br>At A Glance
+    </h2>
+
+    <div class="outcomes">
+
+        <div class="outcome">
+            <div class="co">MODULE I</div>
+            <h3>🌐 Nanotechnology</h3>
+            <p>
+                Introduction · Applications · Ayurveda ·
+                Indian & Global Perspective · Regulation
+            </p>
+        </div>
+
+        <div class="outcome">
+            <div class="co">MODULE II</div>
+            <h3>🧪 Synthesis</h3>
+            <p>
+                Nanomaterials · Top-down · Bottom-up ·
+                Physical · Chemical · Biological methods
+            </p>
+        </div>
+
+        <div class="outcome">
+            <div class="co">MODULE III</div>
+            <h3>🌱 Nature</h3>
+            <p>
+                Self-assembly · Natural nanostructures ·
+                Biological nanostructures · Nanorobotics
+            </p>
+        </div>
+
+        <div class="outcome">
+            <div class="co">MODULE IV</div>
+            <h3>🔬 Characterization</h3>
+            <p>
+                Microscopy · Spectroscopy · Plasmonics ·
+                Nanomagnetism · Nanotoxicology
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<footer>
+    <strong>NANO//SYLLABUS</strong>
+    <br><br>
+    COURSE 01 · NANOBIOTECHNOLOGY · 4 CREDITS
+</footer>
+
+
+<script>
+
+/* ============================
+   DARK / LIGHT MODE
+============================ */
+
+const themeBtn = document.getElementById("themeBtn");
+
+const savedTheme = localStorage.getItem("nanoTheme");
+
+if (savedTheme === "light") {
+    document.body.classList.add("light");
+    themeBtn.textContent = "☀️";
+}
+
+themeBtn.addEventListener("click", () => {
+
+    document.body.classList.toggle("light");
+
+    const light =
+        document.body.classList.contains("light");
+
+    themeBtn.textContent =
+        light ? "☀️" : "🌙";
+
+    localStorage.setItem(
+        "nanoTheme",
+        light ? "light" : "dark"
+    );
+
+});
+
+
+/* ============================
+   MODULE ACCORDION
+============================ */
+
+document
+    .querySelectorAll(".module-header")
+    .forEach(header => {
+
+        header.addEventListener("click", () => {
+
+            const module =
+                header.parentElement;
+
+            module.classList.toggle("open");
+
+        });
+
+    });
+
+
+/* ============================
+   SCROLL REVEAL
+============================ */
+
+const revealElements =
+    document.querySelectorAll(".reveal");
+
+const revealObserver =
+    new IntersectionObserver(
+        entries => {
+
+            entries.forEach(entry => {
+
+                if (entry.isIntersecting) {
+
+                    entry.target.classList.add(
+                        "visible"
+                    );
+
+                }
+
+            });
+
+        },
+        {
+            threshold: .12
+        }
+    );
+
+revealElements.forEach(element => {
+    revealObserver.observe(element);
+});
+
+
+/* ============================
+   MOUSE PARALLAX
+============================ */
+
+document.addEventListener("mousemove", event => {
+
+    const x =
+        (event.clientX / window.innerWidth - .5);
+
+    const y =
+        (event.clientY / window.innerHeight - .5);
+
+    document.querySelectorAll(".blob")
+        .forEach((blob, index) => {
+
+            const speed = (index + 1) * 12;
+
+            blob.style.transform =
+                `translate(
+                    ${x * speed}px,
+                    ${y * speed}px
+                )`;
+
+        });
+
+});
+
+
+/* ============================
+   CARD TILT
+============================ */
+
+document
+    .querySelectorAll(".outcome, .approach, .stat")
+    .forEach(card => {
+
+        card.addEventListener("mousemove", event => {
+
+            const rect =
+                card.getBoundingClientRect();
+
+            const x =
+                event.clientX - rect.left;
+
+            const y =
+                event.clientY - rect.top;
+
+            const rotateX =
+                ((y / rect.height) - .5) * -3;
+
+            const rotateY =
+                ((x / rect.width) - .5) * 3;
+
+            card.style.transform =
+                `perspective(800px)
+                 rotateX(${rotateX}deg)
+                 rotateY(${rotateY}deg)
+                 translateY(-5px)`;
+
+        });
+
+        card.addEventListener("mouseleave", () => {
+            card.style.transform = "";
+        });
+
+    });
+
+</script>
+
+</body>
+</html>
